@@ -1,0 +1,254 @@
+{
+  "people": {
+    "business_female_01": {
+      "file": "assets/people/business_female_01.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 8966
+    },
+    "business_female_02": {
+      "file": "assets/people/business_female_02.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 8640
+    },
+    "business_female_03": {
+      "file": "assets/people/business_female_03.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 8438
+    },
+    "business_female_04": {
+      "file": "assets/people/business_female_04.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 8270
+    },
+    "business_male_01": {
+      "file": "assets/people/business_male_01.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 7435
+    },
+    "business_male_03": {
+      "file": "assets/people/business_male_03.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 7810
+    },
+    "business_male_05": {
+      "file": "assets/people/business_male_05.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 7164
+    },
+    "business_male_06": {
+      "file": "assets/people/business_male_06.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 6950
+    },
+    "female_adult_01": {
+      "file": "assets/people/female_adult_01.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 8732
+    },
+    "female_adult_11": {
+      "file": "assets/people/female_adult_11.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 8896
+    },
+    "female_adult_15": {
+      "file": "assets/people/female_adult_15.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 9832
+    },
+    "male_adult_04": {
+      "file": "assets/people/male_adult_04.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 8684
+    },
+    "male_adult_08": {
+      "file": "assets/people/male_adult_08.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 7364
+    },
+    "male_adult_10": {
+      "file": "assets/people/male_adult_10.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 6732
+    },
+    "male_adult_12": {
+      "file": "assets/people/male_adult_12.glb",
+      "clips": [
+        "walk",
+        "sit_idle",
+        "sit_type",
+        "idle",
+        "talk",
+        "carry",
+        "wave",
+        "cheer"
+      ],
+      "triangles": 6722
+    }
+  },
+  "textures": {
+    "concrete": {
+      "baseColor": "assets/textures/concrete_basecolor.jpg",
+      "normal": "assets/textures/concrete_normal.jpg",
+      "roughness": "assets/textures/concrete_roughness.jpg"
+    },
+    "floor": {
+      "baseColor": "assets/textures/floor_basecolor.jpg",
+      "normal": "assets/textures/floor_normal.jpg",
+      "roughness": "assets/textures/floor_roughness.jpg"
+    },
+    "oak": {
+      "baseColor": "assets/textures/oak_basecolor.jpg",
+      "normal": "assets/textures/oak_normal.jpg",
+      "roughness": "assets/textures/oak_roughness.jpg"
+    },
+    "terrazzo": {
+      "baseColor": "assets/textures/terrazzo_basecolor.jpg",
+      "normal": "assets/textures/terrazzo_normal.jpg",
+      "roughness": "assets/textures/terrazzo_roughness.jpg"
+    },
+    "stone": {
+      "baseColor": "assets/textures/stone_basecolor.jpg",
+      "normal": "assets/textures/stone_normal.jpg",
+      "roughness": "assets/textures/stone_roughness.jpg"
+    }
+  },
+  "hdri": "assets/hdri/fish_hoek_beach_1k.hdr",
+  "sources": [
+    {
+      "name": "Microsoft Rocketbox avatars and animations",
+      "url": "https://github.com/microsoft/Microsoft-Rocketbox",
+      "licence": "MIT"
+    },
+    {
+      "name": "Poly Haven textures and HDRI",
+      "url": "https://polyhaven.com",
+      "licence": "CC0"
+    }
+  ]
+}
