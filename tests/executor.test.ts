@@ -242,6 +242,22 @@ describe('follow-ups the rules do not emit', () => {
     expect(r.log.at(-1)).toBe('state courier typing');
   });
 
+  it('sends 2.5 s apart (the demo gap): Courier stays at the window and only heads home once the sends stop', async () => {
+    const r = rig({ working: new Set<AgentId>(['courier']) });
+    const sent: Action[] = [{ kind: 'goto', agent: 'courier', target: 'courier_window' }, { kind: 'streak' }];
+    r.ex.run(sent);
+    await r.arrive('courier');
+    for (let i = 0; i < 4; i++) {
+      await r.advance(2500);
+      r.ex.run(sent);
+      await r.flush();
+    }
+    expect(r.log).not.toContain('walk courier seat');
+    expect(r.log.filter((c) => c === 'streak')).toHaveLength(5);
+    await r.advance(STREAK_MS + 1);
+    expect(r.log).toContain('walk courier seat');
+  });
+
   it('two sends back to back make two streaks', async () => {
     const r = rig({ working: new Set<AgentId>(['courier']) });
     const sent: Action[] = [{ kind: 'goto', agent: 'courier', target: 'courier_window' }, { kind: 'streak' }];

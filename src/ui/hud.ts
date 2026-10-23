@@ -30,7 +30,8 @@ export interface ClockChip {
 /** A glass chip with the time and the phase of the day. `source` says where the time comes from. */
 export function createClockChip(source: 'Demo' | 'Live' | 'Fixed'): ClockChip {
   const root = el('div', 'hq-chip-clock');
-  root.setAttribute('role', 'status');
+  root.setAttribute('role', 'timer'); // not 'status': a live region would announce every demo minute
+  root.setAttribute('aria-label', 'Office time');
   const time = el('span', 'hq-chip-time');
   const phase = el('span', 'hq-chip-phase');
   root.append(el('span', 'hq-chip-source', source), time, phase);

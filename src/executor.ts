@@ -40,8 +40,8 @@ export interface ExecutorOptions {
 
 /** How long a cheer clip is left to play, ms. */
 export const CHEER_MS = 2800;
-/** From the streak leaving to Courier heading back to the desk. */
-export const STREAK_MS = 2000;
+/** Quiet time after the last streak before Courier heads back to the desk (longer than the demo's 2.5 s send gap). */
+export const STREAK_MS = 5000;
 /** How long Sentinel's "back to X" label stays. */
 export const LABEL_MS = 20000;
 /** An author stands at Sentinel's desk in the carry pose this long before turning back. */
@@ -68,6 +68,7 @@ export class ActionExecutor {
   private intent = new Map<AgentId, PersonState>();
   private labelTokens = new Map<AgentId, number>();
   private labelSeq = 0;
+  private streakSeq = 0;
   private readonly wait: (ms: number) => Promise<void>;
   private readonly later: (ms: number, fn: () => void) => void;
   private readonly warn: (...args: unknown[]) => void;
@@ -206,7 +207,8 @@ export class ActionExecutor {
 
     this.safe(() => this.host.streak());
     item.done();
-    this.later(STREAK_MS, () => this.afterStreak(agent, epoch));
+    const token = ++this.streakSeq;
+    this.later(STREAK_MS, () => this.afterStreak(agent, epoch, token));
   }
 
   private idle(agent: AgentId): boolean {
@@ -228,7 +230,8 @@ export class ActionExecutor {
     this.settle(agent);
   }
 
-  private afterStreak(agent: AgentId, epoch: number): void {
+  private afterStreak(agent: AgentId, epoch: number, token: number): void {
+    if (token !== this.streakSeq) return; // a later send restarted the quiet time
     if (epoch !== this.epoch || !this.idle(agent)) return; // more sends are queued: stay at the window
     if (this.at.get(agent) !== 'courier_window') return;
     this.settle(agent);
