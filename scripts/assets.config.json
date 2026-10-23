@@ -1,0 +1,285 @@
+{
+  "rocketbox": {
+    "repo": "microsoft/Microsoft-Rocketbox",
+    "ref": "master",
+    "licence": "MIT",
+    "url": "https://github.com/microsoft/Microsoft-Rocketbox"
+  },
+  "people": [
+    {
+      "key": "business_female_01",
+      "name": "Business_Female_01",
+      "path": "Assets/Avatars/Professions/Business_Female_01",
+      "gender": "f",
+      "style": "business",
+      "textures": [
+        "f014_body_color",
+        "f014_body_normal",
+        "f014_head_color",
+        "f014_head_normal",
+        "f014_opacity_color"
+      ]
+    },
+    {
+      "key": "business_female_02",
+      "name": "Business_Female_02",
+      "path": "Assets/Avatars/Professions/Business_Female_02",
+      "gender": "f",
+      "style": "business",
+      "textures": [
+        "f015_body_color",
+        "f015_body_normal",
+        "f015_glasses_normal",
+        "f015_glasses_opacity_color",
+        "f015_head_color",
+        "f015_head_normal",
+        "f015_opacity_color"
+      ]
+    },
+    {
+      "key": "business_female_03",
+      "name": "Business_Female_03",
+      "path": "Assets/Avatars/Professions/Business_Female_03",
+      "gender": "f",
+      "style": "business",
+      "textures": [
+        "f016_body_color",
+        "f016_body_normal",
+        "f016_head_color",
+        "f016_head_normal",
+        "f016_opacity_color"
+      ]
+    },
+    {
+      "key": "business_female_04",
+      "name": "Business_Female_04",
+      "path": "Assets/Avatars/Professions/Business_Female_04",
+      "gender": "f",
+      "style": "business",
+      "textures": [
+        "f020_body_color",
+        "f020_body_normal",
+        "f020_head_color",
+        "f020_head_normal",
+        "f020_opacity_color"
+      ]
+    },
+    {
+      "key": "business_male_01",
+      "name": "Business_Male_01",
+      "path": "Assets/Avatars/Professions/Business_Male_01",
+      "gender": "m",
+      "style": "business",
+      "textures": [
+        "m005_body_color",
+        "m005_body_normal",
+        "m005_head_color",
+        "m005_head_normal",
+        "m005_opacity_color"
+      ]
+    },
+    {
+      "key": "business_male_03",
+      "name": "Business_Male_03",
+      "path": "Assets/Avatars/Professions/Business_Male_03",
+      "gender": "m",
+      "style": "business",
+      "textures": [
+        "m020_body_color",
+        "m020_body_normal",
+        "m020_head_color",
+        "m020_head_normal",
+        "m020_opacity_color"
+      ]
+    },
+    {
+      "key": "business_male_05",
+      "name": "Business_Male_05",
+      "path": "Assets/Avatars/Professions/Business_Male_05",
+      "gender": "m",
+      "style": "business",
+      "textures": [
+        "m016_body_color",
+        "m016_body_normal",
+        "m016_head_color",
+        "m016_head_normal"
+      ]
+    },
+    {
+      "key": "business_male_06",
+      "name": "Business_Male_06",
+      "path": "Assets/Avatars/Professions/Business_Male_06",
+      "gender": "m",
+      "style": "business",
+      "textures": [
+        "m025_body_color",
+        "m025_body_normal",
+        "m025_head_color",
+        "m025_head_normal"
+      ]
+    },
+    {
+      "key": "female_adult_01",
+      "name": "Female_Adult_01",
+      "path": "Assets/Avatars/Adults/Female_Adult_01",
+      "gender": "f",
+      "style": "casual",
+      "textures": [
+        "f001_body_color",
+        "f001_body_normal",
+        "f001_head_color",
+        "f001_head_normal",
+        "f001_opacity_color"
+      ]
+    },
+    {
+      "key": "female_adult_11",
+      "name": "Female_Adult_11",
+      "path": "Assets/Avatars/Adults/Female_Adult_11",
+      "gender": "f",
+      "style": "casual",
+      "textures": [
+        "f011_body_color",
+        "f011_body_normal",
+        "f011_head_color",
+        "f011_head_normal",
+        "f011_opacity_color"
+      ]
+    },
+    {
+      "key": "female_adult_15",
+      "name": "Female_Adult_15",
+      "path": "Assets/Avatars/Adults/Female_Adult_15",
+      "gender": "f",
+      "style": "casual",
+      "textures": [
+        "f018_body_color",
+        "f018_body_normal",
+        "f018_head_color",
+        "f018_head_normal",
+        "f018_opacity_color"
+      ]
+    },
+    {
+      "key": "male_adult_04",
+      "name": "Male_Adult_04",
+      "path": "Assets/Avatars/Adults/Male_Adult_04",
+      "gender": "m",
+      "style": "casual",
+      "textures": [
+        "m006_body_color",
+        "m006_body_normal",
+        "m006_head_color",
+        "m006_head_normal",
+        "m006_opacity_color"
+      ]
+    },
+    {
+      "key": "male_adult_08",
+      "name": "Male_Adult_08",
+      "path": "Assets/Avatars/Adults/Male_Adult_08",
+      "gender": "m",
+      "style": "casual",
+      "textures": [
+        "m014_body_color",
+        "m014_body_normal",
+        "m014_head_color",
+        "m014_head_normal",
+        "m014_opacity_color"
+      ]
+    },
+    {
+      "key": "male_adult_10",
+      "name": "Male_Adult_10",
+      "path": "Assets/Avatars/Adults/Male_Adult_10",
+      "gender": "m",
+      "style": "casual",
+      "textures": [
+        "m024_body_color",
+        "m024_body_normal",
+        "m024_head_color",
+        "m024_head_normal",
+        "m024_opacity_color"
+      ]
+    },
+    {
+      "key": "male_adult_12",
+      "name": "Male_Adult_12",
+      "path": "Assets/Avatars/Adults/Male_Adult_12",
+      "gender": "m",
+      "style": "casual",
+      "textures": [
+        "m007_body_color",
+        "m007_body_normal",
+        "m007_head_color",
+        "m007_head_normal"
+      ]
+    }
+  ],
+  "clips": {
+    "walk": {
+      "dir": "all_animations_max_motextr_xy",
+      "file": "walk_neutral_01",
+      "inPlace": true
+    },
+    "sit_idle": {
+      "dir": "all_animations_max_motextr_static",
+      "file": "sit_chair_idle_neutral_01"
+    },
+    "sit_type": {
+      "dir": "all_animations_max_motextr_static",
+      "file": "sit_table_idle_neutral_02",
+      "note": "No seated typing clip exists in Rocketbox and work_table is a standing clip, so the seated at-table idle is used."
+    },
+    "idle": {
+      "dir": "all_animations_max_motextr_static",
+      "file": "idle_neutral_01"
+    },
+    "talk": {
+      "dir": "all_animations_max_motextr_static",
+      "file": "gestic_talk_neutral_01"
+    },
+    "carry": {
+      "dir": "all_animations_max_motextr_static",
+      "file": "documents_idle"
+    },
+    "wave": {
+      "dir": "all_animations_max_motextr_static",
+      "file": "wave_01"
+    },
+    "cheer": {
+      "dir": "all_animations_max_motextr_static",
+      "file": "cheer_01"
+    }
+  },
+  "textures": {
+    "concrete": {
+      "id": "concrete"
+    },
+    "floor": {
+      "id": "concrete_floor_worn_001"
+    },
+    "oak": {
+      "id": "oak_veneer_02"
+    },
+    "terrazzo": {
+      "id": "terrazzo_tiles"
+    },
+    "stone": {
+      "id": "plastered_wall_02"
+    }
+  },
+  "hdri": {
+    "id": "fish_hoek_beach"
+  },
+  "polyhaven": {
+    "licence": "CC0",
+    "url": "https://polyhaven.com"
+  },
+  "limits": {
+    "maxTriangles": 15000,
+    "avatarTextureSize": 1024,
+    "minFreeGB": 1.5,
+    "fetchedOn": "2026-10-22"
+  }
+}

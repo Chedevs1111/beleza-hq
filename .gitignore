@@ -1,0 +1,14 @@
+.superpowers/
+node_modules/
+dist/
+public/assets/**/*.glb
+public/assets/**/*.ktx2
+public/assets/**/*.hdr
+public/assets/**/*.webp
+public/assets/**/*.jpg
+.asset-work/
+
+# Kept local: private spec/plan (contact details), third-party reference photo, SDD working notes
+docs/superpowers/
+docs/reference/
+.superpowers/
