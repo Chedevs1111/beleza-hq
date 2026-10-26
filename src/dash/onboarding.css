@@ -1,0 +1,36 @@
+/* The welcome wizard. It lives inside the glass main column, which owns the one blur, so nothing here adds a
+   backdrop-filter. Only transforms move, and none of it moves under prefers-reduced-motion. */
+.ob { max-width: 640px; }
+.ob-dots { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+.ob-dot {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  font: 600 13px/1 var(--bz-ui); color: var(--bz-muted); text-decoration: none;
+  background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(244, 236, 255, 0.2);
+  transition: transform var(--spring-snappy-ms, 200ms) var(--spring-snappy, ease-out), background 160ms;
+}
+.ob-dot:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
+.ob-dot-done { color: var(--bz-ink); background: rgba(139, 92, 246, 0.4); border-color: rgba(139, 92, 246, 0.75); }
+.ob-dot[aria-current='step'] { color: #1c1129; background: var(--bz-gold); border-color: var(--bz-gold-deep); }
+.ob-panel {
+  display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(244, 236, 255, 0.1);
+}
+.ob-panel .pg-h2 { margin: 0; }
+.ob-needs { margin: 0; padding-left: 20px; font: 400 14px/1.5 var(--bz-ui); color: rgba(244, 236, 255, 0.9); }
+.ob-privacy { margin: 0; font: 400 14.5px/1.55 var(--bz-ui); color: var(--bz-ink); overflow-wrap: anywhere; }
+.ob-connect { display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(244, 236, 255, 0.1); }
+.ob-state { display: flex; align-items: center; gap: 10px; }
+.ob-state-label { font: 600 12px/1 var(--bz-ui); letter-spacing: 0.06em; text-transform: uppercase; color: var(--bz-muted); }
+.ob-actions-inline { display: flex; flex-wrap: wrap; gap: 8px; }
+.ob-lock { margin: 0; color: var(--bz-gold); font: 500 13px/1.45 var(--bz-ui); }
+.ob-review { margin-top: 4px; }
+.ob-edit { display: inline-block; margin-top: 3px; color: var(--bz-gold); font: 500 13px/1.3 var(--bz-ui); }
+.ob-nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.ob-back { margin-right: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .ob-dot { transition: none !important; }
+  .ob-dot:hover { transform: none; }
+}
+
+/* Settings -> Connections: the link styled as a small button */
+.st-setup { text-decoration: none; white-space: nowrap; }

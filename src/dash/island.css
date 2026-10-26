@@ -1,0 +1,245 @@
+/* The live island (top centre), the mascot and the team bar (bottom). Beleza glass: aubergine / gold / amethyst.
+   Glass rule: each .glass panel here owns exactly one blur and nothing animates its opacity or filter; the pill and the
+   preview are siblings, never nested. Only transforms move on the panels themselves. */
+
+/* ---- island */
+.isl {
+  position: relative;
+  width: min(520px, 100%); /* four status pills fit beside the mascot and the badge */
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* the strip beside the pill stays click-through to the office */
+}
+.isl > * { pointer-events: auto; }
+
+.isl-face {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 6px 16px 6px 8px;
+  border-radius: 999px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  transition: transform var(--spring-snappy-ms, 200ms) var(--spring-snappy, ease-out);
+}
+.isl-face:hover { transform: translateY(1px) scale(1.015); }
+.isl-face:active { transform: scale(0.985); }
+.isl-face:focus-visible { outline-offset: 3px; }
+.isl[data-mood='envelope'] .isl-face { border-color: rgba(233, 194, 107, 0.62); box-shadow: var(--bz-glass-shadow), 0 0 22px -4px rgba(233, 194, 107, 0.45); }
+.isl[data-mood='cheer'] .isl-face { border-color: rgba(139, 92, 246, 0.7); box-shadow: var(--bz-glass-shadow), 0 0 22px -4px rgba(139, 92, 246, 0.55); }
+
+.isl-mascot { flex: none; display: grid; place-items: center; width: 30px; height: 30px; }
+.isl-mascot .mascot { width: 30px; height: 30px; overflow: visible; }
+
+.isl-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.isl-line { font: 600 13px/1.2 var(--bz-ui); color: var(--bz-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.isl[data-mood='envelope'] .isl-line { color: var(--bz-gold); }
+.isl-sub { font: 400 11.5px/1.25 var(--bz-ui); color: var(--bz-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 300px; }
+
+.isl-badge {
+  flex: none;
+  min-width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  padding: 0 6px;
+  border-radius: 999px;
+  font: 700 11.5px/20px var(--bz-ui);
+  font-style: normal;
+  text-align: center;
+  color: #1c1129;
+  background: var(--bz-gold);
+}
+.isl-badge[hidden] { display: none; }
+
+/* ---- the preview */
+.isl-panel {
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding: 16px 16px 14px;
+  border-radius: 22px;
+}
+.isl-panel[hidden] { display: none; }
+.isl-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.isl-who { font: 600 12px/1 var(--bz-ui); letter-spacing: 0.06em; text-transform: uppercase; color: var(--bz-gold); }
+.isl-state {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font: 500 11px/1.2 var(--bz-ui);
+  color: var(--bz-ink);
+  background: rgba(139, 92, 246, 0.28);
+  border: 1px solid rgba(139, 92, 246, 0.45);
+}
+.isl-title { margin: 10px 0 0; font-size: 19px; font-weight: 600; line-height: 1.2; color: var(--bz-ink); }
+.isl-body {
+  margin: 10px 0 0;
+  max-height: 150px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 10px 12px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 400 13px/1.5 var(--bz-ui);
+  color: rgba(244, 236, 255, 0.86);
+  background: rgba(255, 255, 255, 0.06);
+}
+.isl-actions { display: flex; gap: 8px; margin-top: 12px; }
+.isl-btn {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 999px;
+  font: 600 13px/1 var(--bz-ui);
+  color: var(--bz-ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: transform var(--spring-snappy-ms, 200ms) var(--spring-snappy, ease-out), background 160ms;
+}
+.isl-btn:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
+.isl-btn:active { transform: scale(0.97); }
+.isl-approve { color: #1c1129; background: var(--bz-gold); border-color: var(--bz-gold-deep); }
+.isl-approve:hover { background: #f3d287; }
+.isl-reject { color: #ffb4ba; border-color: rgba(240, 98, 108, 0.45); }
+.isl-reject:hover { background: rgba(240, 98, 108, 0.2); }
+.isl-btn:disabled, .isl-btn:disabled:hover { opacity: 0.45; cursor: not-allowed; transform: none; color: var(--bz-ink); background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.18); }
+.isl-btn[hidden] { display: none; }
+.isl-others, .isl-empty-sub { margin: 10px 0 0; font: 400 12px/1.3 var(--bz-ui); color: var(--bz-muted); }
+.isl-empty { margin: 0; font: 600 15px/1.3 var(--bz-display); color: var(--bz-ink); }
+.isl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (max-width: 719px) {
+  .isl-sub { max-width: 52vw; }
+}
+
+/* ---- mascot */
+.mascot-body { fill: var(--bz-amethyst); }
+.mascot-shine { fill: #fff; opacity: 0.2; }
+.mascot-sclera { fill: #fff; }
+.mascot-pupil { fill: #1c1129; }
+.mascot-arc { fill: none; stroke: #1c1129; stroke-width: 1.6; stroke-linecap: round; }
+.mascot-mouth { fill: none; stroke: #1c1129; stroke-width: 1.5; stroke-linecap: round; }
+.mascot-mouth-open { fill: #1c1129; }
+.mascot-spark { fill: var(--bz-gold); }
+.mascot-mail rect { fill: var(--bz-gold); }
+.mascot-mail path { fill: none; stroke: #7a5a14; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
+.mascot-z { fill: none; stroke: var(--bz-gold); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.mascot-brow { fill: none; stroke: #1c1129; stroke-width: 1.3; stroke-linecap: round; opacity: 0.8; }
+.mascot-wave { fill: none; stroke: var(--bz-gold); stroke-width: 1.5; stroke-linecap: round; }
+.mascot-dot { fill: var(--bz-gold); }
+.mascot-tick circle { fill: var(--bz-gold); }
+.mascot-tick path { fill: none; stroke: #1c1129; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.mascot-puff { fill: none; stroke: #f0626c; stroke-width: 1.4; stroke-linecap: round; }
+.mascot-tear { fill: #bfe6ff; opacity: 0.9; }
+.mascot-bubble { fill: rgba(255, 255, 255, 0.3); stroke: #fff; stroke-width: 0.7; }
+
+.mascot-eye { transform-box: fill-box; transform-origin: center; }
+.mascot[data-mood='bright'] .mascot-eye,
+.mascot[data-mood='calm'] .mascot-eye,
+.mascot[data-mood='greet'] .mascot-eye,
+.mascot[data-mood='think'] .mascot-eye,
+.mascot[data-mood='proud'] .mascot-eye { animation: bz-blink 4.6s infinite; }
+.mascot[data-mood='bright'] .mascot-spark { transform-box: fill-box; transform-origin: center; animation: bz-twinkle 1.2s ease-in-out infinite; }
+.mascot[data-mood='envelope'] .mascot-mail { animation: bz-bob 1.6s ease-in-out infinite; }
+.mascot[data-mood='cheer'] { animation: bz-hop 0.5s var(--spring-bounce, ease-out) 2; }
+.mascot[data-mood='cheer'] .mascot-spark { transform-box: fill-box; transform-origin: center; animation: bz-twinkle 0.5s ease-in-out infinite; }
+.mascot[data-mood='doze'] .mascot-z { animation: bz-drift 3.4s ease-in-out infinite; }
+/* Passing and idle moods. Each is one small, transform-only loop; reduced motion switches them all off below. */
+.mascot[data-mood='greet'] .mascot-wave { transform-box: fill-box; transform-origin: left center; animation: bz-wave 0.5s ease-in-out infinite alternate; }
+.mascot[data-mood='greet'] .mascot-wave-b { animation-delay: 0.12s; }
+.mascot[data-mood='think'] .mascot-dot { transform-box: fill-box; transform-origin: center; animation: bz-pulse 1.2s ease-in-out infinite; }
+.mascot[data-mood='think'] .mascot-dot-b { animation-delay: 0.2s; }
+.mascot[data-mood='think'] .mascot-dot-c { animation-delay: 0.4s; }
+.mascot[data-mood='proud'] .mascot-tick { transform-box: fill-box; transform-origin: center; animation: bz-twinkle 1.4s ease-in-out infinite; }
+.mascot[data-mood='annoyed'] { animation: bz-shake 0.36s ease-in-out 2; }
+.mascot[data-mood='annoyed'] .mascot-puff { transform-box: fill-box; transform-origin: center; animation: bz-twinkle 0.7s ease-in-out infinite; }
+.mascot[data-mood='yawn'] .mascot-yawn { transform-box: fill-box; transform-origin: center; animation: bz-yawn 2.4s ease-in-out infinite; }
+.mascot[data-mood='sleep'] .mascot-bubble { transform-box: fill-box; transform-origin: left center; animation: bz-breathe 2.8s ease-in-out infinite; }
+.mascot[data-mood='sleep'] .mascot-z { animation: bz-drift 3.4s ease-in-out infinite; }
+.mascot[data-mood='sleep'] .mascot-z-b { animation-delay: 0.9s; }
+@keyframes bz-wave { from { transform: rotate(-10deg); } to { transform: rotate(14deg); } }
+@keyframes bz-pulse { 0%, 100% { transform: scale(0.75); } 50% { transform: scale(1.15); } }
+@keyframes bz-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-1.2px); } 75% { transform: translateX(1.2px); } }
+@keyframes bz-yawn { 0%, 100% { transform: scale(0.8, 0.7); } 50% { transform: scale(1.1, 1.25); } }
+@keyframes bz-breathe { 0%, 100% { transform: scale(0.7); } 50% { transform: scale(1.25); } }
+@keyframes bz-blink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
+@keyframes bz-twinkle { 0%, 100% { transform: scale(0.7) rotate(0deg); } 50% { transform: scale(1.15) rotate(20deg); } }
+@keyframes bz-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2px); } }
+@keyframes bz-hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-4px); } }
+@keyframes bz-drift { 0%, 100% { transform: translate(0, 1px); } 50% { transform: translate(-1px, -1.5px); } }
+
+/* ---- team bar */
+.bz-team {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border-radius: 999px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.bz-team::-webkit-scrollbar { display: none; }
+
+.bz-t {
+  --ring: #8c8798;
+  --zone: 233, 194, 107;
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  padding: 0;
+  border: 2px solid var(--ring);
+  border-radius: 50%;
+  color: var(--bz-ink);
+  font: 600 12px/1 var(--bz-ui);
+  letter-spacing: 0.02em;
+  background: radial-gradient(circle at 35% 28%, rgba(var(--zone), 0.42), rgba(var(--zone), 0.16) 70%), var(--bz-surface);
+  cursor: pointer;
+  transition: transform var(--spring-snappy-ms, 200ms) var(--spring-snappy, ease-out), border-color 200ms;
+}
+.bz-t[data-zone='growth'] { --zone: 127, 176, 234; }
+.bz-t[data-zone='studio'] { --zone: 200, 138, 230; }
+.bz-t[data-zone='ops'] { --zone: 238, 181, 96; }
+.bz-t[data-zone='client'] { --zone: 116, 207, 166; }
+.bz-t:hover { transform: translateY(-2px) scale(1.1); }
+.bz-t:active { transform: scale(0.94); }
+.bz-t:focus-visible { outline: 2px solid var(--bz-gold); outline-offset: 2px; }
+
+.bz-t[data-status='parked'] { border-style: dashed; opacity: 0.7; }
+.bz-t[data-status='waiting'] { box-shadow: 0 0 12px -1px rgba(233, 194, 107, 0.7); }
+.bz-t[data-status='failed'] { box-shadow: 0 0 10px -1px rgba(240, 98, 108, 0.6); }
+/* A working ring breathes: a second ring grows out of it and fades. */
+.bz-t[data-status='working']::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--ring);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: bz-ring 1.8s ease-out infinite;
+}
+@keyframes bz-ring { from { transform: scale(1); opacity: 0.7; } to { transform: scale(1.4); opacity: 0; } }
+
+/* ---- agent card: the Run now button is live in the demo (src/ui/style.css styles it as disabled) */
+.hq-card-run:not(:disabled) { color: var(--hq-gold); cursor: pointer; background: rgba(233, 194, 107, 0.18); transition: background 160ms, transform 160ms; }
+.hq-card-run:not(:disabled):hover { background: rgba(233, 194, 107, 0.3); }
+.hq-card-run:not(:disabled):active { transform: scale(0.97); }
+
+@media (prefers-reduced-motion: reduce) {
+  .isl-face, .isl-btn, .bz-t, .hq-card-run { transition: none !important; }
+  .mascot, .mascot *, .bz-t::after { animation: none !important; }
+}

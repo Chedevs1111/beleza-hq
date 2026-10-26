@@ -1,6 +1,5 @@
-// The small DOM furniture around the canvas: the time-of-day chip, the team bar, the frame-rate meter and the
+// The small DOM furniture around the canvas: the time-of-day chip, the frame-rate meter and the
 // "needs WebGL" message. Text is set with textContent only. Styles are in hud.css (imported by main.ts).
-import type { Agent } from '../types';
 import type { Phase } from '../office/timeofday';
 
 /** "07:30" for an hour of the day in 0..24 (24 wraps to 00:00). */
@@ -27,15 +26,15 @@ export interface ClockChip {
   set(hour: number, phase: Phase): void;
 }
 
-/** A glass chip with the time and the phase of the day. `source` says where the time comes from. */
-export function createClockChip(source: 'Demo' | 'Live' | 'Fixed'): ClockChip {
+/** A glass chip with the time and the phase of the day, mounted into `host`. `source` says where the time comes from. */
+export function createClockChip(source: 'Demo' | 'Live' | 'Fixed', host: HTMLElement): ClockChip {
   const root = el('div', 'hq-chip-clock');
   root.setAttribute('role', 'timer'); // not 'status': a live region would announce every demo minute
   root.setAttribute('aria-label', 'Office time');
   const time = el('span', 'hq-chip-time');
   const phase = el('span', 'hq-chip-phase');
   root.append(el('span', 'hq-chip-source', source), time, phase);
-  document.body.append(root);
+  host.append(root);
   let lastTime = '';
   let lastPhase = '';
   return {
@@ -48,26 +47,6 @@ export function createClockChip(source: 'Demo' | 'Live' | 'Fixed'): ClockChip {
       }
     },
   };
-}
-
-/** One button per agent along the bottom, so Atlas and the others are one click away whatever the camera shows. */
-export function createTeamBar(agents: readonly Agent[], onPick: (agent: Agent) => void): HTMLElement {
-  const bar = el('nav', 'hq-team');
-  bar.setAttribute('aria-label', 'Team');
-  for (const a of agents) {
-    const b = el('button', 'hq-team-btn');
-    b.type = 'button';
-    b.dataset.zone = a.zone;
-    if (a.parked) b.classList.add('hq-team-parked');
-    b.setAttribute('aria-label', a.parked ? `${a.name}, parked` : a.name);
-    const dot = el('span', 'hq-team-dot', a.name[0]);
-    dot.setAttribute('aria-hidden', 'true');
-    b.append(dot, el('span', 'hq-team-name', a.name));
-    b.addEventListener('click', () => onPick(a));
-    bar.append(b);
-  }
-  document.body.append(bar);
-  return bar;
 }
 
 export interface FpsMeter {

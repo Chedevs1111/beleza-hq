@@ -1,0 +1,94 @@
+/* Activity, Spend and Settings. Like pages.css: these sit inside the glass main column, which owns the one blur, so
+   nothing here adds a backdrop-filter. Only transforms move, and none of it moves under prefers-reduced-motion. */
+.pg-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.pg-select {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font: 500 13px/1.2 var(--bz-ui);
+  color: var(--bz-ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.pg-select option { color: #1c1129; }
+.pg-btn[disabled] { opacity: 0.45; cursor: default; pointer-events: none; }
+.pg-note { margin: 0; color: var(--bz-muted); font: 400 12.5px/1.5 var(--bz-ui); }
+.pg-scroll[hidden] { display: none; }
+
+/* activity */
+.pg-activity { min-width: 480px; }
+.pg-time-cell { width: 64px; white-space: nowrap; color: var(--bz-muted); font-variant-numeric: tabular-nums; }
+
+/* spend */
+.pg-spend { min-width: 420px; }
+.pg-table .pg-num { text-align: right; font-variant-numeric: tabular-nums; }
+.pg-usd { display: block; font-weight: 600; color: var(--bz-ink); }
+.pg-zar { display: block; font-size: 12px; color: var(--bz-muted); }
+.pg-th-sub { display: block; margin-top: 3px; font: 400 11px/1.2 var(--bz-ui); letter-spacing: 0; text-transform: none; color: var(--bz-muted); }
+.pg-spend tfoot th, .pg-spend tfoot td { border-top: 1px solid rgba(244, 236, 255, 0.22); border-bottom: 0; background: rgba(255, 255, 255, 0.05); }
+
+/* settings */
+.st-section { gap: 0; }
+.st-intro { margin: -4px 0 12px; color: var(--bz-muted); font: 400 13.5px/1.45 var(--bz-ui); }
+.st-list { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.st-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 12px 14px; border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(244, 236, 255, 0.1);
+}
+.st-row-text { min-width: 0; }
+.st-label { margin: 0; font: 600 14.5px/1.3 var(--bz-ui); color: var(--bz-ink); overflow-wrap: anywhere; }
+.st-note { margin: 3px 0 0; font: 400 13px/1.4 var(--bz-ui); color: var(--bz-muted); overflow-wrap: anywhere; }
+.st-reload { color: var(--bz-gold); }
+.st-rules { margin: 0; padding: 12px 16px 12px 32px; border-radius: 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(244, 236, 255, 0.1); font: 400 14px/1.5 var(--bz-ui); color: rgba(244, 236, 255, 0.9); }
+.st-rules li + li { margin-top: 6px; }
+.st-message { min-height: 1.4em; margin: 0 0 8px; color: var(--bz-gold); font: 500 13.5px/1.4 var(--bz-ui); }
+.st-table { min-width: 620px; }
+.st-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.st-actions .pg-btn { padding: 7px 12px; font-size: 12.5px; }
+.st-pause[aria-pressed='true'] { color: #1c1129; background: var(--bz-gold); border-color: var(--bz-gold-deep); }
+
+/* the on/off switch: a pill button; only the knob's transform moves */
+.st-switch {
+  position: relative; flex: none; display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px;
+  min-width: 78px; height: 30px; padding: 0 12px 0 34px; border-radius: 999px;
+  font: 600 12px/1 var(--bz-ui); color: var(--bz-ink);
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); cursor: pointer;
+}
+.st-switch[aria-checked='true'] { background: rgba(139, 92, 246, 0.45); border-color: rgba(139, 92, 246, 0.8); padding: 0 34px 0 12px; justify-content: flex-start; }
+.st-knob {
+  position: absolute; left: 4px; top: 50%; width: 20px; height: 20px; margin-top: -10px; border-radius: 50%;
+  background: var(--bz-ink); transition: transform var(--spring-snappy-ms, 200ms) var(--spring-snappy, ease-out);
+}
+.st-switch[aria-checked='true'] .st-knob { transform: translateX(48px); background: var(--bz-gold); }
+
+@media (max-width: 560px) {
+  .st-row { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .st-knob { transition: none !important; }
+}
+
+/* insights: plain translucent fills inside the glass main column (no backdrop-filter); nothing moves */
+.ins-tiles { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
+.ins-tile { display: flex; flex-direction: column; justify-content: space-between; gap: 6px; padding: 16px 18px; border-radius: 16px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(244, 236, 255, 0.12); min-width: 0; }
+.ins-tile-hero { border-color: var(--bz-rim); background: rgba(139, 92, 246, 0.16); }
+.ins-tile-value { font-size: 34px; font-weight: 600; line-height: 1.1; color: var(--bz-ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.ins-tile-hero .ins-tile-value { color: var(--bz-gold); font-size: 42px; }
+.ins-tile-label { font: 500 12.5px/1.3 var(--bz-ui); color: var(--bz-muted); }
+.ins-agents { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ins-agents[hidden] { display: none; }
+.ins-agent { display: grid; grid-template-columns: 84px 1fr 78px; align-items: center; gap: 12px; font: 500 13.5px/1.2 var(--bz-ui); }
+.ins-agent-name { color: var(--bz-ink); font-weight: 600; }
+.ins-agent-min { text-align: right; color: var(--bz-muted); font-variant-numeric: tabular-nums; }
+.ins-bar { display: block; height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+.ins-bar-fill { display: block; width: var(--w, 0%); height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--bz-amethyst), var(--bz-gold)); }
+.ins-card-wrap { max-width: 440px; }
+.ins-canvas { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 18px; border: 1px solid var(--bz-rim); background: var(--bz-bg); }
+.ins-tools { margin-top: 12px; }
+.ins-hide { display: inline-flex; align-items: center; gap: 8px; font: 500 13.5px/1.2 var(--bz-ui); color: var(--bz-ink); cursor: pointer; }
+.ins-check { width: 18px; height: 18px; accent-color: var(--bz-amethyst); }
+@media (max-width: 560px) {
+  .ins-tiles { grid-template-columns: 1fr 1fr; }
+  .ins-tile-hero { grid-column: 1 / -1; }
+  .ins-agent { grid-template-columns: 70px 1fr 66px; }
+}

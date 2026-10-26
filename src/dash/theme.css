@@ -1,0 +1,65 @@
+/* Stage 2 glass foundation: palette tokens, the .glass panel, type stacks, gold focus rings, reduced-motion overrides.
+   Tokens are --bz-* so they never collide with the Stage 1 HUD's --hq-* variables.
+   Glass rule: only a panel's own transform may animate; never opacity or filter on an ancestor of a .glass panel,
+   and never nest one .glass inside another (one backdrop-filter per panel). */
+:root {
+  /* aubergine */
+  --bz-bg: #0b0810;
+  --bz-surface: #2a1b3d;
+  /* gold */
+  --bz-gold: #e9c26b;
+  --bz-gold-deep: #b8892f;
+  /* amethyst */
+  --bz-amethyst: #8b5cf6;
+  --bz-amethyst-deep: #6d28d9;
+  /* ink */
+  --bz-ink: #f4ecff;
+  --bz-muted: rgba(244, 236, 255, 0.62);
+
+  --bz-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --bz-ui: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --bz-rim: rgba(233, 194, 107, 0.3);
+  --bz-glass-fill: linear-gradient(160deg, rgba(42, 27, 61, 0.9), rgba(11, 8, 16, 0.86));
+  --bz-glass-shadow: 0 18px 50px rgba(5, 3, 10, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.glass {
+  color: var(--bz-ink);
+  font-family: var(--bz-ui);
+  background: var(--bz-glass-fill); /* opaque enough to read on its own where backdrop-filter is missing */
+  border: 1px solid var(--bz-rim);
+  border-radius: 20px;
+  box-shadow: var(--bz-glass-shadow);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .glass {
+    background: linear-gradient(160deg, rgba(42, 27, 61, 0.52), rgba(11, 8, 16, 0.44));
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    backdrop-filter: blur(22px) saturate(1.5);
+  }
+  /* The light profile never pays for a blur: a solid-ish fill instead. */
+  .lite .glass,
+  [data-quality='lite'] .glass {
+    background: var(--bz-glass-fill);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+.bz-display { font-family: var(--bz-display); }
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--bz-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass,
+  .glass *,
+  .glass *::before,
+  .glass *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

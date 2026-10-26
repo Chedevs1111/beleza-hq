@@ -12,6 +12,10 @@ export interface AgentCardInfo {
   nextRun?: string;
   /** Spend so far today, in US dollars. */
   costToday?: number;
+  /** "Run now" in demo mode: starts a demo run and says whether it did (false: already on a run, paused or parked). */
+  onRun?: () => boolean;
+  /** Why a refused "Run now" did nothing (parked, paused, already working), in the words Settings uses. */
+  refusal?: () => string;
 }
 
 const ZONE_LABEL: Record<ZoneId, string> = {
@@ -21,12 +25,14 @@ const ZONE_LABEL: Record<ZoneId, string> = {
   client: 'Client desk',
 };
 
-const RUN_HINT = 'Live in stage 3';
+const RUN_HINT = 'Demo run — live in stage 3';
 const NONE = '–'; // en dash for "nothing yet"
 const HINT_ID = 'hq-card-run-hint';
 
 let card: HTMLElement | null = null;
 let previousFocus: Element | null = null;
+/** Pixels from the right edge when docked beside the live office column; null leaves the stylesheet's own spot. */
+let dockPx: number | null = null;
 const closeListeners = new Set<() => void>();
 
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
@@ -65,8 +71,15 @@ function ensureCard(): HTMLElement {
   card.setAttribute('role', 'dialog');
   card.setAttribute('aria-modal', 'false');
   card.hidden = true;
+  if (dockPx !== null) card.style.right = `${dockPx}px`;
   document.body.append(card);
   return card;
+}
+
+/** Moves the card's right edge so it sits just left of the live office column (or back, with null). */
+export function setAgentCardDock(px: number | null): void {
+  dockPx = px !== null && Number.isFinite(px) && px > 0 ? Math.round(px) : null;
+  if (card) card.style.right = dockPx === null ? '' : `${dockPx}px`;
 }
 
 /** Opens (or refreshes) the card for `agent`. Focus moves to its close button; Esc closes it. */
@@ -102,15 +115,35 @@ export function showAgentCard(agent: Agent, info: AgentCardInfo = {}): void {
     ...row('Spend today', info.costToday === undefined ? NONE : money(info.costToday)),
   );
 
-  // Disabled button + a visible hint it points to: screen readers read "Run now, dimmed, Live in stage 3".
+  // Live in the demo when the caller gives onRun (and the agent is not parked); otherwise a disabled button with a
+  // visible hint it points to: screen readers read "Run now, dimmed, Demo run — live in stage 3".
+  const onRun = agent.parked ? undefined : info.onRun;
   const run = el('button', 'hq-card-run', 'Run now');
   run.type = 'button';
-  run.disabled = true;
-  run.setAttribute('aria-disabled', 'true');
+  run.disabled = onRun === undefined;
+  if (run.disabled) run.setAttribute('aria-disabled', 'true');
   run.setAttribute('aria-describedby', HINT_ID);
   run.title = RUN_HINT;
   const hint = el('span', 'hq-card-hint', RUN_HINT);
   hint.id = HINT_ID;
+  hint.setAttribute('role', 'status');
+  if (onRun) {
+    run.addEventListener('click', () => {
+      let started = false;
+      try {
+        started = onRun();
+      } catch (err) {
+        console.warn('[hq] could not start a demo run', err);
+      }
+      let why = 'Already on a run';
+      try {
+        why = info.refusal?.() ?? why;
+      } catch (err) {
+        console.warn('[hq] could not say why a demo run did not start', err);
+      }
+      hint.textContent = started ? 'Demo run started' : why;
+    });
+  }
   const actions = el('div', 'hq-card-actions');
   actions.title = RUN_HINT; // disabled buttons get no hover events; the wrapper carries the tooltip
   actions.append(run, hint);

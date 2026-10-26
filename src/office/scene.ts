@@ -107,10 +107,18 @@ export function createScene(canvas: HTMLCanvasElement, opts: { lite: boolean }):
   scene.add(hemi, sun, sun.target);
 
   let frame = { dx: 0, dy: 0, zoom: 1 };
+  let sizedW = 0;
+  let sizedH = 0;
   const resize = () => {
     const w = canvas.clientWidth || innerWidth;
     const h = canvas.clientHeight || innerHeight;
-    renderer.setSize(w, h, false);
+    // setFrame calls this every frame while the picture eases; resizing the drawing buffer is the expensive part,
+    // so only do it when the size moved (a new pixel ratio resizes the buffer itself).
+    if (w !== sizedW || h !== sizedH) {
+      renderer.setSize(w, h, false);
+      sizedW = w;
+      sizedH = h;
+    }
     camera.aspect = w / h;
     camera.zoom = frame.zoom;
     // A view offset the size of the canvas only slides the picture: content moves by (dx, dy), nothing is cropped or zoomed.

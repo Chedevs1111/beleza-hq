@@ -1,0 +1,42 @@
+/* The island's status pills and the brief "finished" alert. They live inside the island's own glass pill, so they add no
+   blur of their own (one backdrop-filter per panel); the alert animates only its own transform, and not at all under
+   prefers-reduced-motion. */
+.isl-pills {
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+  margin-top: 4px;
+  overflow: hidden;
+}
+.isl-pills[hidden] { display: none; }
+
+.isl-pill {
+  --pill: 255, 255, 255;
+  flex: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  max-width: 170px;
+  height: 16px;
+  box-sizing: border-box;
+  padding: 0 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font: 600 10.5px/16px var(--bz-ui);
+  color: var(--bz-ink);
+  background: rgba(var(--pill), 0.1);
+  border: 1px solid rgba(var(--pill), 0.16);
+}
+.isl-pill[data-tone='busy'] { --pill: 139, 92, 246; }
+.isl-pill[data-tone='warn'] { --pill: 233, 194, 107; }
+.isl-pill[data-tone='bad'] { --pill: 240, 98, 108; color: #ffd2d5; }
+.isl-pv { font-weight: 700; }
+.isl-pl { font-weight: 400; font-size: 9.5px; color: var(--bz-muted); }
+.isl-alert { max-width: 100%; padding: 0 10px; }
+
+@media (max-width: 719px) {
+  /* a compact island on a phone: two pills at most (an alert still shows on its own) */
+  .isl-pill:nth-child(n + 3):not(.isl-alert) { display: none; }
+}

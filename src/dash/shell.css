@@ -1,0 +1,308 @@
+/* Dashboard shell. Home: the office is the whole window and glass sits at the edges. Other pages: a glass main column
+   plus a live column holding the same animated office. Panels are position:fixed; only their own transforms animate. */
+.bz-shell {
+  --bz-gap: 16px;
+  --bz-side: 240px;
+  --bz-live: clamp(320px, 30vw, 480px);
+}
+@media (max-width: 959px) {
+  .bz-shell { --bz-side: 64px; }
+}
+
+/* ---- the world */
+.bz-world {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  background: #0b0d12;
+}
+.bz-world #world { display: block; width: 100%; height: 100%; } /* beats index.html's 100vw x 100vh */
+.bz-shell:not([data-page='home']) .bz-world {
+  inset: var(--bz-gap) var(--bz-gap) var(--bz-gap) auto;
+  width: var(--bz-live);
+  border-radius: 20px;
+  border: 1px solid var(--bz-rim);
+  box-shadow: var(--bz-glass-shadow);
+}
+@media (max-width: 719px) {
+  .bz-shell:not([data-page='home']) .bz-world { display: none; }
+}
+
+/* ---- sidebar */
+.bz-sidebar {
+  position: fixed;
+  z-index: 6;
+  top: var(--bz-gap);
+  bottom: var(--bz-gap);
+  left: var(--bz-gap);
+  width: var(--bz-side);
+  box-sizing: border-box;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.bz-sidebar::-webkit-scrollbar { display: none; }
+.bz-sidebar > * { flex: none; } /* nine links on a short window: scroll the sidebar, never squash or clip an entry */
+
+.bz-brand { display: flex; align-items: center; gap: 10px; padding: 0 4px; }
+.bz-brand-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  font: 700 20px/1 var(--bz-display);
+  color: var(--bz-gold);
+  background: var(--bz-surface);
+  border: 1px solid var(--bz-rim);
+}
+.bz-brand-name { font-size: 19px; font-weight: 600; color: var(--bz-ink); white-space: nowrap; }
+
+/* The clock chip from hud.ts, restyled to sit inside the sidebar (no second blur inside a glass panel). */
+.bz-clock .hq-chip-clock {
+  position: static;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(233, 194, 107, 0.18);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.bz-nav { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.bz-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--bz-muted);
+  font: 500 14px/1.2 var(--bz-ui);
+  text-decoration: none;
+  transition: background 160ms, color 160ms;
+}
+.bz-nav-link:hover { color: var(--bz-ink); background: rgba(255, 255, 255, 0.08); }
+.bz-nav-link:focus-visible { outline-offset: -2px; }
+.bz-nav-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bz-nav-more { display: none; } /* the More tab exists on phones only */
+.bz-more-tab {
+  width: 100%;
+  margin: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: 500 14px/1.2 var(--bz-ui);
+}
+.bz-nav-link[aria-current='page'],
+.bz-more-tab[data-on='true'] {
+  color: var(--bz-gold);
+  background: rgba(233, 194, 107, 0.13);
+  box-shadow: inset 0 0 0 1px rgba(233, 194, 107, 0.25);
+}
+
+/* Narrow windows: an icon rail. The labels stay in the page for screen readers. */
+@media (max-width: 959px) {
+  .bz-sidebar { padding: 12px 8px; align-items: stretch; }
+  .bz-brand { justify-content: center; padding: 0; }
+  .bz-brand-name,
+  .bz-nav-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .bz-nav-link { justify-content: center; padding: 10px 0; }
+  .bz-clock .hq-chip-clock { justify-content: center; padding: 6px 0; }
+  .bz-clock .hq-chip-source,
+  .bz-clock .hq-chip-phase { display: none; }
+  .bz-clock .hq-chip-time { font-size: 12px; }
+}
+
+/* Short windows (a laptop with a toolbar, a phone on its side): tighter rows, and a visible thin scrollbar so it is clear
+   the sidebar scrolls. Nothing is clipped: every link stays reachable by scrolling or Tab. */
+@media (max-height: 700px) and (min-width: 720px) {
+  .bz-sidebar {
+    gap: 10px;
+    padding-block: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(233, 194, 107, 0.45) transparent;
+  }
+  .bz-sidebar::-webkit-scrollbar { display: block; width: 6px; }
+  .bz-sidebar::-webkit-scrollbar-thumb { background: rgba(233, 194, 107, 0.4); border-radius: 3px; }
+  .bz-nav { gap: 2px; }
+  .bz-nav-link { padding-block: 8px; }
+}
+
+/* ---- island (top centre, Home only) and team bar */
+.bz-island {
+  position: fixed;
+  z-index: 5;
+  top: var(--bz-gap);
+  left: calc(var(--bz-side) + 2 * var(--bz-gap));
+  right: var(--bz-gap);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.bz-island > * { pointer-events: auto; }
+.bz-shell:not([data-page='home']) .bz-island { display: none; }
+
+.bz-team-host {
+  position: fixed;
+  z-index: 7;
+  bottom: var(--bz-gap);
+  left: calc(var(--bz-side) + 2 * var(--bz-gap));
+  right: var(--bz-gap);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.bz-team-host > * { pointer-events: auto; }
+/* hud.css positions the bar against the window; here the host does it. */
+.bz-team-host .hq-team {
+  position: static;
+  transform: none;
+  max-width: 100%;
+}
+/* Other pages: the bar rides at the bottom of the live column. */
+.bz-shell:not([data-page='home']) .bz-team-host {
+  left: calc(100vw - var(--bz-live) - var(--bz-gap) + 12px);
+  right: calc(var(--bz-gap) + 12px);
+  bottom: calc(var(--bz-gap) + 12px);
+}
+@media (max-width: 719px) {
+  .bz-shell:not([data-page='home']) .bz-team-host { display: none; }
+}
+
+/* ---- main column (every page but Home) */
+.bz-main {
+  position: fixed;
+  z-index: 6;
+  top: var(--bz-gap);
+  bottom: var(--bz-gap);
+  left: calc(var(--bz-side) + 2 * var(--bz-gap));
+  right: calc(var(--bz-live) + 2 * var(--bz-gap));
+  box-sizing: border-box;
+  padding: 28px 32px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.bz-main[hidden] { display: none; }
+.bz-page-title { margin: 0; font-size: 34px; font-weight: 600; line-height: 1.1; color: var(--bz-ink); }
+.bz-page-title:focus { outline: none; }
+.bz-page-note { margin: 10px 0 0; color: var(--bz-muted); font-size: 15px; line-height: 1.5; }
+
+/* ---- the More sheet (phones; JS never opens it on a wide window) */
+.bz-more { position: fixed; inset: 0; z-index: 40; }
+.bz-more[hidden] { display: none; }
+.bz-more-scrim { position: absolute; inset: 0; margin: 0; padding: 0; border: 0; background: rgba(5, 3, 10, 0.5); cursor: default; }
+.bz-more-sheet {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+  padding: 10px 14px 14px;
+  border-radius: 22px;
+}
+.bz-sheet-grip { display: block; width: 36px; height: 4px; margin: 0 auto 8px; border-radius: 2px; background: rgba(244, 236, 255, 0.3); }
+.bz-more-title { margin: 0 4px 6px; font-size: 20px; font-weight: 600; color: var(--bz-ink); }
+.bz-more-list { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.bz-more-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border-radius: 14px;
+  color: var(--bz-ink);
+  font: 500 16px/1.2 var(--bz-ui);
+  text-decoration: none;
+}
+button.bz-more-link { width: 100%; margin: 0; border: 0; background: none; cursor: pointer; text-align: left; }
+.bz-more-link:hover, .bz-more-link:active { background: rgba(255, 255, 255, 0.09); }
+.bz-more-link .bz-nav-icon { color: var(--bz-gold); }
+@media (min-width: 720px) {
+  .bz-more { display: none; }
+}
+
+/* ---- phone (< 720 px): the sidebar is a bottom tab bar, the island sits first at the top, a page takes the screen */
+@media (max-width: 719px) {
+  .bz-shell {
+    --bz-tab: 64px;
+    /* what the bottom edge gives to the tab bar: the bar, its margin and the home indicator, plus a gap above it */
+    --bz-foot: calc(var(--bz-tab) + env(safe-area-inset-bottom, 0px) + 16px);
+  }
+  .bz-sidebar {
+    top: auto;
+    left: 8px;
+    right: 8px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    height: var(--bz-tab);
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px;
+    overflow: visible;
+    border-radius: 22px;
+  }
+  .bz-brand, .bz-clock { display: none; }
+  .bz-nav { flex: 1; min-width: 0; flex-direction: row; gap: 2px; }
+  .bz-nav > li { flex: 1 1 0; min-width: 0; display: flex; }
+  .bz-nav > li[data-more] { display: none; }
+  .bz-nav > .bz-nav-more { display: flex; }
+  .bz-nav-link {
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-height: 56px;
+    padding: 6px 2px;
+    font-size: 11px;
+    line-height: 1.1;
+  }
+  .bz-nav-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
+
+  .bz-island { z-index: 30; left: 12px; right: 12px; top: calc(var(--bz-gap) - 4px + env(safe-area-inset-top, 0px)); }
+  .bz-team-host { left: 12px; right: 12px; bottom: var(--bz-foot); }
+
+  /* A page takes the screen. Nothing is behind it (the world is hidden), so it needs no blur; and with no backdrop-filter
+     on it, sheets inside it (the Approvals editor) can be fixed to the screen instead of to the page. */
+  .bz-main {
+    top: calc(var(--bz-gap) + env(safe-area-inset-top, 0px));
+    bottom: var(--bz-foot);
+    left: 12px;
+    right: 12px;
+    padding: 22px 18px;
+    border-radius: 22px;
+    background: var(--bz-glass-fill);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .bz-page-title { font-size: 28px; }
+}

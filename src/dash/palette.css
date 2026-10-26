@@ -1,0 +1,98 @@
+/* The ⌘K command bar. Glass rule: .bz-pal-panel is the one .glass (one blur); the scrim beside it is a sibling and
+   nothing here animates opacity or filter. The panel's own transform is animated from palette.ts (and skipped under
+   prefers-reduced-motion). */
+.bz-pal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 14vh 16px 16px;
+  box-sizing: border-box;
+}
+.bz-pal[hidden] { display: none; }
+.bz-pal-scrim { position: absolute; inset: 0; background: rgba(5, 3, 10, 0.5); }
+
+.bz-pal-panel {
+  position: relative;
+  width: min(580px, 100%);
+  max-height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 22px;
+  overflow-y: auto;
+}
+
+.bz-pal-row { display: flex; align-items: center; gap: 10px; padding: 4px 8px 8px; border-bottom: 1px solid rgba(244, 236, 255, 0.1); }
+.bz-pal-icon { flex: none; width: 18px; height: 18px; fill: none; stroke: var(--bz-muted); stroke-width: 2; stroke-linecap: round; }
+.bz-pal-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 4px;
+  font: 500 16px/1.3 var(--bz-ui);
+  color: var(--bz-ink);
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+.bz-pal-input::placeholder { color: var(--bz-muted); }
+.bz-pal-row:focus-within { border-bottom-color: var(--bz-rim); }
+
+.bz-mic {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  color: var(--bz-ink);
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.bz-mic[hidden] { display: none; }
+.bz-mic svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.bz-mic:hover { background: rgba(139, 92, 246, 0.34); }
+.bz-mic.on { color: #1c1129; background: var(--bz-gold); border-color: var(--bz-gold); box-shadow: 0 0 0 4px rgba(233, 194, 107, 0.25); }
+
+.bz-pal-list { list-style: none; margin: 6px 0 0; padding: 0; overflow-y: auto; min-height: 48px; flex: 0 1 auto; }
+.bz-pal-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.bz-pal-item[aria-selected='true'] { background: rgba(139, 92, 246, 0.26); box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.5); }
+.bz-pal-title { flex: none; font: 600 14px/1.3 var(--bz-ui); color: var(--bz-ink); }
+.bz-pal-hint { flex: 1; min-width: 0; font: 400 12px/1.3 var(--bz-ui); color: var(--bz-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
+
+.bz-pal-empty, .bz-pal-msg { margin: 8px 12px 2px; font: 400 13px/1.4 var(--bz-ui); color: var(--bz-muted); }
+.bz-pal-empty[hidden], .bz-pal-msg[hidden] { display: none; }
+.bz-pal-msg { color: var(--bz-gold); }
+
+.bz-pal-dict { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 8px 6px 0; padding: 8px 10px; font: 400 12px/1.4 var(--bz-ui); color: var(--bz-muted); border-radius: 12px; background: rgba(139, 92, 246, 0.14); }
+.bz-pal-dict[hidden] { display: none; }
+.bz-pal-dict-off {
+  flex: none;
+  padding: 5px 11px;
+  font: 600 12px/1 var(--bz-ui);
+  color: var(--bz-ink);
+  background: transparent;
+  border: 1px solid var(--bz-rim);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.bz-pal-dict-off:hover { background: rgba(233, 194, 107, 0.16); }
+
+.bz-pal-foot { display: flex; gap: 16px; padding: 10px 12px 2px; font: 400 11px/1 var(--bz-ui); color: var(--bz-muted); }
+
+@media (max-width: 479px) {
+  .bz-pal { padding-top: 8vh; }
+  .bz-pal-hint { display: none; }
+}

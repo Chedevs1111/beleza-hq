@@ -1,0 +1,115 @@
+/* Approvals, Leads, Content and Inbox. These render inside the glass main column (.bz-main), which owns the one blur:
+   nothing here adds a backdrop-filter, and only transforms move. Rows and cards use plain translucent fills. */
+.pg { display: flex; flex-direction: column; gap: 18px; max-width: 760px; }
+.pg-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.pg-head-text { min-width: 0; }
+.pg-sub { margin: 8px 0 0; color: var(--bz-muted); font: 400 14px/1.4 var(--bz-ui); }
+.pg-h2 { margin: 0 0 10px; font-size: 20px; font-weight: 600; color: var(--bz-ink); }
+.pg-block { display: flex; flex-direction: column; }
+.pg-block[hidden], .pg-empty[hidden], .pg-list[hidden], .pg-plan[hidden] { display: none; }
+.pg-empty { margin: 0; padding: 18px; border-radius: 14px; color: var(--bz-muted); font: 400 14px/1.5 var(--bz-ui); background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(244, 236, 255, 0.2); }
+.pg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.pg-link { color: var(--bz-gold); text-underline-offset: 3px; font-weight: 600; }
+.pg-link:hover { color: #f3d287; }
+
+/* lists and cards */
+.pg-list { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.pg-card, .pg-item {
+  padding: 16px 16px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(244, 236, 255, 0.12);
+}
+.pg-item { padding: 12px 14px; }
+.pg-card-head { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.pg-agent { font: 600 12px/1.2 var(--bz-ui); letter-spacing: 0.06em; text-transform: uppercase; color: var(--bz-gold); overflow-wrap: anywhere; }
+.pg-time { margin-left: auto; font: 400 12px/1 var(--bz-ui); color: var(--bz-muted); }
+.pg-card-title { margin: 10px 0 0; font-size: 19px; font-weight: 600; line-height: 1.25; color: var(--bz-ink); overflow-wrap: anywhere; }
+.pg-sentinel { margin: 8px 0 0; }
+.pg-item-text { margin: 8px 0 0; font: 400 14px/1.45 var(--bz-ui); color: rgba(244, 236, 255, 0.9); overflow-wrap: anywhere; }
+.pg-body {
+  margin: 10px 0 0;
+  max-height: 180px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 10px 12px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 400 13px/1.5 var(--bz-ui);
+  color: rgba(244, 236, 255, 0.86);
+  background: rgba(0, 0, 0, 0.22);
+}
+.pg-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+
+/* chips */
+.pg-chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font: 500 11.5px/1.3 var(--bz-ui);
+  color: var(--bz-ink);
+  background: rgba(139, 92, 246, 0.28);
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  white-space: nowrap;
+}
+.pg-tone-ok { background: rgba(94, 200, 150, 0.2); border-color: rgba(94, 200, 150, 0.5); }
+.pg-tone-gold, .pg-tone-grade-a { color: #f6dc9c; background: rgba(233, 194, 107, 0.2); border-color: rgba(233, 194, 107, 0.55); }
+.pg-tone-warn { color: #ffc2c7; background: rgba(240, 98, 108, 0.18); border-color: rgba(240, 98, 108, 0.5); }
+.pg-tone-new, .pg-tone-grade-c { color: var(--bz-muted); background: rgba(255, 255, 255, 0.08); border-color: rgba(244, 236, 255, 0.22); }
+.pg-tone-grade-b { background: rgba(127, 176, 234, 0.2); border-color: rgba(127, 176, 234, 0.5); }
+
+/* buttons (one transform transition each; no blur) */
+.pg-btn {
+  padding: 9px 16px;
+  border-radius: 999px;
+  font: 600 13px/1 var(--bz-ui);
+  color: var(--bz-ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: transform var(--spring-snappy-ms, 200ms) var(--spring-snappy, ease-out), background 160ms;
+}
+.pg-btn:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
+.pg-btn:active { transform: scale(0.97); }
+.pg-btn-gold { color: #1c1129; background: var(--bz-gold); border-color: var(--bz-gold-deep); }
+.pg-btn-gold:hover { background: #f3d287; }
+.pg-btn-danger { color: #ffb4ba; border-color: rgba(240, 98, 108, 0.45); }
+.pg-btn-danger:hover { background: rgba(240, 98, 108, 0.2); }
+.pg-filters { display: flex; gap: 6px; }
+.pg-filter { padding: 8px 14px; }
+.pg-filter[aria-pressed='true'] { color: #1c1129; background: var(--bz-gold); border-color: var(--bz-gold-deep); }
+
+/* the inline editor */
+.pg-editor { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.pg-label { font: 600 12px/1.2 var(--bz-ui); color: var(--bz-muted); }
+.pg-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 160px;
+  resize: vertical;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font: 400 14px/1.5 var(--bz-ui);
+  color: var(--bz-ink);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--bz-rim);
+}
+
+/* leads table */
+.pg-scroll { overflow-x: auto; border-radius: 14px; border: 1px solid rgba(244, 236, 255, 0.12); background: rgba(255, 255, 255, 0.04); }
+.pg-table { width: 100%; min-width: 560px; border-collapse: collapse; font: 400 13.5px/1.35 var(--bz-ui); }
+.pg-table th { padding: 10px 12px; text-align: left; font: 600 11.5px/1.2 var(--bz-ui); letter-spacing: 0.06em; text-transform: uppercase; color: var(--bz-muted); border-bottom: 1px solid rgba(244, 236, 255, 0.14); }
+.pg-table td, .pg-table .pg-th-row { padding: 10px 12px; border-bottom: 1px solid rgba(244, 236, 255, 0.07); vertical-align: middle; }
+.pg-table .pg-th-row { text-transform: none; letter-spacing: 0; font: 600 13.5px/1.35 var(--bz-ui); color: var(--bz-ink); }
+.pg-table tbody tr:last-child > * { border-bottom: 0; }
+
+/* Muse's week */
+.pg-week { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pg-day { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 10px 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(244, 236, 255, 0.1); }
+.pg-day-name { flex: none; width: 88px; font: 600 13px/1.2 var(--bz-ui); color: var(--bz-gold); }
+.pg-hook { flex: 1 1 220px; min-width: 0; font: 400 14px/1.4 var(--bz-ui); color: rgba(244, 236, 255, 0.9); overflow-wrap: anywhere; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-btn { transition: none !important; }
+}
